@@ -25,13 +25,19 @@ class Poll extends Model
         for($i = 0; $i < count($polls); $i++){
             $date = date('Y-m-d');
 
-            if($polls[$i]->finishDate == $date){
-                Poll::closePoll($polls[$i]->id);
+            if($polls[$i]->startDate == $date){
+                Poll::where('id', $polls[$i]->id)
+                    ->update(['active' => 2]);
 
             } elseif($polls[$i]->startDate > $date){
                 Poll::where('id', $polls[$i]->id)
                     ->update(['active' => 1]);
             }
+
+            if($polls[$i]->finishDate == $date){
+                Poll::closePoll($polls[$i]->id);
+
+            }  
             
             if($polls[$i]->totalOptions < 3){
                 Poll::where('id', $polls[$i]->id)
@@ -42,8 +48,6 @@ class Poll extends Model
 
     public static function closePoll($id){
         Poll::where('id', $id)
-            ->where('active', 1)
-            ->orWhere('active', 2)
             ->update(['active' => 0]);
     }
 

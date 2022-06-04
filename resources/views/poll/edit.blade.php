@@ -23,6 +23,11 @@
                 <input type="text" name="title" class="form-control" id="title" minlength="5" maxlength="200" required value="{{ $poll->title }}">
 
                 <div class="mb-3 mt-3">
+                    <label for="startDate" class="form-label">Data de Inicio da Enquete</label>
+                    <input type="date" name="startDate" class="form-control" id="startDate" min="{{ date('Y-m-d') }}" required value="{{ $poll->startDate }}">
+                </div>
+
+                <div class="mb-3 mt-3">
                     <label for="date" class="form-label">Data para Fechamento da Enquete</label>
                     <input type="date" name="finishDate" class="form-control" id="date" min="{{ date('Y-m-d') }}" required value="{{ $poll->finishDate }}">
                 </div>

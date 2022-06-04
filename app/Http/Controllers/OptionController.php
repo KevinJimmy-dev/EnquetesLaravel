@@ -100,7 +100,15 @@ class OptionController extends Controller{
             return redirect()->back();
         }
 
+        $totalOptionsPoll = Poll::select('totalOptions')
+                                ->where('id', $option->poll_id)
+                                ->first();
+
         if($option->delete()){
+            Poll::where('id', $option->poll_id)
+                ->update(['totalOptions' => $totalOptionsPoll->totalOptions - 1, 
+                        'active' => 2]);
+
             return redirect()->route('edit.option', [$option->poll_id])->with('success', 'Remoção concluida!');
 
         } else{

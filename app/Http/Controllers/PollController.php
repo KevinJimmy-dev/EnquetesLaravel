@@ -36,6 +36,9 @@ class PollController extends Controller{
 
         if($info['startDate'] > $info['finishDate']){
             return redirect()->back()->with('error', 'A data de inicio deve ser menor do que a final!');
+            
+        } elseif($info['startDate'] == $info['finishDate']){
+            return redirect()->back()->with('error', 'A data de inicio deve ser diferente da final!');
         }
 
         if($searchResult == null){
@@ -63,6 +66,7 @@ class PollController extends Controller{
 
         $poll->update([
             'title' => $request->title,
+            'startDate' => $request->startDate,
             'finishDate' => $request->finishDate
         ]);
 
